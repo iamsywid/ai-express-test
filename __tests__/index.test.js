@@ -3,6 +3,16 @@ const request = require('supertest');
 const express = require('express');
 const app = require('../index');
 
+let server;
+
+beforeAll((done) => {
+  server = app.listen(4000, done); // Start the server on port 4000
+});
+
+afterAll((done) => {
+  server.close(done); // Close the server after tests are done
+});
+
 describe('GET /hello', () => {
   it('should return Hello World!', async () => {
     const response = await request(app).get('/hello');
